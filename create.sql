@@ -1,0 +1,51 @@
+CREATE TABLE IF NOT EXISTS Genres (
+id SERIAL PRIMARY KEY,
+genre_name VARCHAR(40) UNIQUE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Singers (
+id INTEGER PRIMARY KEY,
+singer_name VARCHAR(50) UNIQUE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS GenresSingers (
+genre_id INTEGER REFERENCES Genres(id),
+singer_id INTEGER REFERENCES Singers(id),
+CONSTRAINT pk_1 PRIMARY KEY (genre_id, singer_id)
+);
+
+CREATE TABLE IF NOT EXISTS Singers (
+id INTEGER PRIMARY KEY,
+singer_name VARCHAR(50) UNIQUE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Albums (
+id SERIAL PRIMARY KEY,
+album_name VARCHAR(40) UNIQUE NOT NULL,
+year_of_release INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS SingersAlbums (
+singer_id INTEGER REFERENCES Singers(id),
+album_id INTEGER REFERENCES Albums(id),
+CONSTRAINT pk_2 PRIMARY KEY (singer_id, album_id)
+);
+
+CREATE TABLE IF NOT EXISTS Compilations (
+id SERIAL PRIMARY KEY,
+compilation_name VARCHAR(60) UNIQUE NOT NULL,
+year_of_release INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Songs (
+id INTEGER PRIMARY KEY,
+album_id INTEGER NOT NULL REFERENCES ALBUMS(id),
+song_name VARCHAR(50) UNIQUE NOT NULL,
+duration INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS CompilationsSongs (
+compilation_id INTEGER REFERENCES Compilations(id),
+song_id INTEGER REFERENCES Songs(id),
+CONSTRAINT pk_3 PRIMARY KEY (compilation_id, song_id)
+);
